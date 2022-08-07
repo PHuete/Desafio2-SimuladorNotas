@@ -2,6 +2,7 @@
 
 alert("Calcula tu nota final de curso con esta calculadora")
 
+const asignaturas = ["matematicas", "lengua", "ingles", "fisica", "naturales"] 
 let nombre = ingresarNombre()
 let repetir = true
 
@@ -10,6 +11,7 @@ while (repetir) {
     let media = calcularMedia()
     alert(nombre + ", tu media en " + materia + " es: " + media + "/10")
     evaluacion(media)
+    agregarMateria()
     repetir = confirm("¿Introducir datos para otra asignatura?")
     if (repetir == false) {
         alert("Gracias por utilizar la calculadora. Un saludo.")
@@ -31,15 +33,28 @@ function ingresarNombre() {
 }
 
 function ingresarMateria() {
-    const asignaturas = ["matematicas", "lengua", "ingles", "fisica", "naturales"] 
-    let materia = prompt("Introduce la materia a calcular: Matematicas, Lengua, Ingles, Fisica o Naturales")
-    let materiaMinusculas = minusculas(materia)
-    while (!asignaturas.includes(materia)) { // HACIENDO WHILE (materia === "matematicas" || materia === "lengua"...) sin array no me cogia los datos. La solucion que encontre era haciendo array y comprobando si lo introducido en prompt estaba en array
-        materia = prompt("Introduce una materia valida: Matematicas, Lengua, Ingles, Fisica o Naturales")
+    asignaturas
+    let materia = prompt("Introduce la materia a calcular: " + (asignaturas))
+    let materiaMinusculas = minusculas(materia)//utilizo una funcion creada abajo que pasa a .tolowercase lo introducido por prompt
+    while (!asignaturas.includes(materiaMinusculas)) { // HACIENDO WHILE (materia === "matematicas" || materia === "lengua"...) sin array no me cogia los datos. La solucion que encontre era haciendo array y comprobando si lo introducido en prompt estaba en array
+        materia = prompt("Introduce una materia valida: " + primeraMayuscula(asignaturas) )
         materiaMinusculas = minusculas(materia)
     }
 
-    return primeraMayuscula(materia)
+    return primeraMayuscula(materia) // retorno materia con la funcion creada abajo para poner la primera letra en mayusculas.
+}
+
+function agregarMateria() {
+    let nueva = confirm("¿Quieres ingresar una asignatura que esté fuera de lista?")
+    if (nueva = true){
+    let nuevaMateria = prompt("Nueva asignatura:")
+    let resultado = asignaturas.includes(nuevaMateria)
+        if (!resultado) { 
+            asignaturas.push(nuevaMateria)
+        } else {
+            alert("La asignatura " + nuevaMateria + " ya figura en la lista.")
+        }
+    }   
 }
 
 function calcularMedia() {
